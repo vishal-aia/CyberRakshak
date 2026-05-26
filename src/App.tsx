@@ -1,4 +1,27 @@
+import { useState } from "react";
+
 function App() {
+  const [link, setLink] = useState("");
+  const [result, setResult] = useState("");
+
+  const scanLink = () => {
+    if (!link) {
+      setResult("Please enter a link.");
+      return;
+    }
+
+    if (
+      link.includes("free") ||
+      link.includes("login") ||
+      link.includes("otp") ||
+      link.includes("gift")
+    ) {
+      setResult("⚠️ Suspicious Link Detected!");
+    } else {
+      setResult("✅ This link looks Safe.");
+    }
+  };
+
   return (
     <div className="bg-black text-white min-h-screen">
 
@@ -8,15 +31,15 @@ function App() {
           CyberRakshak
         </h1>
 
-        <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-semibold">
+        <button className="bg-green-500 px-4 py-2 rounded-lg font-semibold">
           Get Started
         </button>
       </header>
 
-      {/* Hero Section */}
-      <section className="text-center px-6 py-16">
+      {/* Hero */}
+      <section className="text-center px-6 py-14">
 
-        <h2 className="text-5xl md:text-7xl font-extrabold leading-tight">
+        <h2 className="text-5xl font-extrabold leading-tight">
           Stay Safe <br />
           From <br />
           <span className="text-green-400">
@@ -25,21 +48,35 @@ function App() {
         </h2>
 
         <p className="text-gray-300 mt-8 text-lg max-w-2xl mx-auto">
-          CyberRakshak helps you stay protected from phishing,
-          fake links, OTP scams and cyber attacks.
+          Detect phishing links, fake websites and online frauds.
         </p>
 
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
+        {/* Input */}
+        <div className="mt-10 flex flex-col gap-4 items-center">
 
-          <button className="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-xl text-lg font-bold">
+          <input
+            type="text"
+            placeholder="Paste website link here..."
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            className="w-full max-w-xl px-4 py-4 rounded-xl text-black text-lg"
+          />
+
+          <button
+            onClick={scanLink}
+            className="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-xl text-lg font-bold"
+          >
             Scan Link
           </button>
 
-          <button className="border border-green-400 text-green-400 hover:bg-green-400 hover:text-black px-8 py-4 rounded-xl text-lg font-bold">
-            Learn More
-          </button>
+          {result && (
+            <div className="mt-4 text-2xl font-bold">
+              {result}
+            </div>
+          )}
 
         </div>
+
       </section>
 
       {/* Features */}
@@ -61,7 +98,7 @@ function App() {
           </h3>
 
           <p className="text-gray-300">
-            Scan unknown links before opening them on your device.
+            Scan unknown links before opening them.
           </p>
         </div>
 
@@ -79,7 +116,7 @@ function App() {
 
       {/* Footer */}
       <footer className="text-center text-gray-500 py-8 border-t border-gray-800">
-        © 2026 CyberRakshak. All rights reserved.
+        © 2026 CyberRakshak
       </footer>
 
     </div>
